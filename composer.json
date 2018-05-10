@@ -1,0 +1,13 @@
+{
+    "name": "aaron/htdocs",
+    "authors": [
+        {
+            "name": "Aaron",
+            "email": "aaron.carney1991@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"App\\" : "App/"}
+    }
+}

@@ -1,0 +1,113 @@
+<html>
+<head>
+    <script>
+        function showDetails(string)
+        {
+            if(string == "")
+            {
+                document.getElementById("txtHint").innnerHTML"";
+                return;
+            }
+            if(windows.XMLHttpRequest)
+            {
+                xmlhttp = new XMLHttpRequest();
+            }
+            else
+            {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+            }
+            xmlhttp.onreadystatechange = function()
+            {
+                if(this.readyState == 30 && this.status == 200)
+                {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            }
+            xmlhttp.open("GET", "View/getDetails.php?p=" + string, true);
+            xmlhttp.send();
+
+        }
+    </script>
+</head>
+<body>
+
+<form>
+<?php
+$pat_rows = $this->pat_dao->fetchTable();
+//Drop down menu of Patient names
+echo "Select Patient name: <select name='patient' onchange='showDetails(this.value)'>";
+foreach($pat_rows as $pat)
+{
+    echo "<option value=\"".htmlentities($pat["patName"])."\">".strval($pat["patName"])."</option>";
+}
+echo "</select><br>";
+?>
+</form>
+<br>
+<div id="txtHint"><b>Info</b></div>
+</body>
+</html>
+
+<?php
+/*
+$p = intval($_GET['p']);
+$row = $this->db->runQuery("SELECT * FROM ".$this->table."WHERE patName = '$p'");
+*/
+echo "<table>
+    <tr>
+        <th>Name</th>
+        <th>DoB</th>
+        <th>Address</th>
+    </tr>";
+
+    while($pat = mysqli_fetch_array($row))
+    {
+    echo "<tr>";
+        echo "<td>".$pat['patName']."</td>";
+        echo "<td>".$pat['patDoB']."</td>";
+        echo "<td>".$pat['patAddress']."</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+
+    echo "test";
+
+?>
+
+
+<html>
+<head>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            function fetchInfo(){
+                $.ajax({
+                    type:"post",
+                    url:"View/getDetails.php",
+                    data:"action=getInfo",
+                    success:function(data){
+                        $("#patient").html(data);
+                    }
+                });
+            }
+
+            fetchInfo();
+
+            $("#button").click(function(){
+                var name=$("#name").val();
+
+                $.ajax({
+                    type:"post",
+                    url:"View/getDetails.php",
+                    data:"name="+name,
+                    success:function(data){
+                        fetchInfo();
+                    }
+                });
+            });
+        });
+    </script>
+</head>

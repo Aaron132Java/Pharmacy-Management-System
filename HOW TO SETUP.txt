@@ -1,0 +1,15 @@
+How to set up
+
+XAMPP
+Copy Project files into XAMPP HTDOC directory C:\xampp\htdocs. So that Index.php is at the root.
+Open XAMPP and start Apache, MySQL and FileZilla.
+
+Set up Database
+Click Admin on MySQL to open PHPmyAdmin.
+Create a database and name it pharmacy.
+Select the SQL tab and paste the contents of createTableds.sql into the field and run.
+Copy and paste the contents of insertData.sql and run.
+
+Run application
+Open Web browser and go to http://localhost/index.php?controller=login&method=index
+Enter password of selected member of staff. E.g John RUSSELL = 1991-11-11.
